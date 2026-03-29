@@ -1,3 +1,5 @@
+"use client";
+
 import { AppLayout } from '@/components/app-layout';
 import { MealIdeasGenerator } from './meal-ideas-generator';
 import { SlotRecommender } from './slot-recommender';
