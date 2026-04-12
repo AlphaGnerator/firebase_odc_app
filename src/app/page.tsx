@@ -102,54 +102,50 @@ const heroCarouselDishes = [
 
 const pricingPlans = [
   {
-    name: "Daily Visit",
-    price: "₹200",
+    name: "One-Time Visit",
+    price: "₹299",
     period: "/ visit",
-    tagline: "Perfect for trying us out or unpredictable weeks.",
+    tagline: "Perfect for emergencies or trying out our service quality.",
     features: [
-      "One visit, one meal — no lock-in.",
-      "Access to the chef-curated menu of the day.",
-      "Same great ingredients and transparency as all other plans.",
-      "Standard slot availability (subject to capacity).",
+      "Single visit without any long-term commitment.",
+      "Vetted background-checked professionals.",
+      "Access to standard slot availability.",
+      "Pay-per-use, completely flexible.",
     ],
-    cta: "Start Your Day",
+    cta: "Book a Visit",
     plan: "day",
     highlight: false,
   },
   {
-    name: "Weekly Rhythm",
-    price: "₹980",
-    period: "/ week",
-    tagline: "For households that want structure without long commitments.",
+    name: "Monthly Disruption-Free",
+    price: "₹4,999",
+    period: "/ month",
+    tagline: "The ultimate premium peace of mind for your household.",
     features: [
-      "7 scheduled visits for your chosen meal.",
-      "Priority over Daily for slot booking.",
-      "Per-meal savings vs Daily (≈30% cheaper).",
-      "Disruption guarantee: backup cook arranged.",
-      "Nutritionist-tuned weekly menu option.",
-      "1 'pause day' per week with rollover credit.",
+      "Zero-Disruption Guarantee: We send a substitute instantly if someone is on leave.",
+      "Dedicated multi-cuisine cook or premium maid assigned.",
+      "Highest priority for scheduling and customized instructions.",
+      "Free access to nutritionist consultation (for cooks).",
+      "Complimentary access to Pure Pantry early deals.",
+      "Save up to 40% compared to daily visits.",
     ],
-    cta: "Choose Weekly",
-    plan: "weekly",
+    cta: "Subscribe Now",
+    plan: "monthly",
     highlight: true,
   },
   {
-    name: "Monthly Peace Plan",
-    price: "₹3,300",
-    period: "/ month",
-    tagline: "For people who never want to think about food again.",
+    name: "Weekly Flex Plan",
+    price: "₹1,499",
+    period: "/ week",
+    tagline: "For those needing structured help without a full month lock-in.",
     features: [
-      "Up to 30 visits a month for your chosen meal.",
-      "Top priority for time slots & favorite cooks.",
-      "Best per-meal value (≈45% cheaper than Daily).",
-      "Strongest disruption guarantee with fastest SLA.",
-      "Complimentary nutritionist onboarding session.",
-      "Stored nutrition profile for automatic cook guidance.",
-      "Up to 4 'pause days' per month with rollover.",
-      "Early access to new dishes and seasonal menus.",
+      "7 consecutive scheduled visits.",
+      "Priority slot booking over direct walk-ins.",
+      "Option to pause for 1 day a week without penalty.",
+      "Flexible task assignment based on daily needs.",
     ],
-    cta: "Go Monthly",
-    plan: "monthly",
+    cta: "Choose Weekly",
+    plan: "weekly",
     highlight: false,
   },
 ]
@@ -172,73 +168,6 @@ function NewsletterForm() {
     );
 }
 
-const painDetails = {
-  money: {
-    title: 'Daily delivery = empty wallet',
-    body: 'One “quick order” a day and your monthly bill looks like a luxury subscription you never wanted.',
-  },
-  energy: {
-    title: 'Zero energy left to cook',
-    body: 'After calls and commute, even chopping onions feels like a side hustle.',
-  },
-  influencer: {
-    title: 'Influencer recipes, never cooked',
-    body: 'Saved a hundred reels, cooked exactly zero of them. Your fridge knows the truth.',
-  },
-  homefood: {
-    title: 'Missing ghar ka khaana',
-    body: 'Body is in the city, cravings are still in your childhood kitchen.',
-  },
-};
-
-type PainKey = keyof typeof painDetails;
-
-function PainTabs() {
-    const [activeKey, setActiveKey] = React.useState<PainKey>('money');
-    const [isPaused, setIsPaused] = React.useState(false);
-
-    React.useEffect(() => {
-        if (isPaused) return;
-
-        const keys = Object.keys(painDetails) as PainKey[];
-        const timer = setInterval(() => {
-            setActiveKey(prev => {
-                const idx = keys.indexOf(prev);
-                return keys[(idx + 1) % keys.length];
-            });
-        }, 4000);
-
-        return () => clearInterval(timer);
-    }, [isPaused]);
-    
-    const active = painDetails[activeKey];
-
-    return (
-        <div 
-            className="hero-pain-tabs touch-manipulation"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-        >
-            <div className="hero-pain-chips">
-                {(Object.keys(painDetails) as PainKey[]).map(key => (
-                    <button 
-                        key={key}
-                        className={cn("pain-chip", activeKey === key && "active")} 
-                        data-key={key}
-                        onClick={() => setActiveKey(key)}
-                    >
-                        {painDetails[key].title}
-                    </button>
-                ))}
-            </div>
-
-            <div className="hero-pain-detail" id="hero-pain-detail">
-                <strong>{active.title}</strong>
-                <p>{active.body}</p>
-            </div>
-        </div>
-    );
-}
 
 function HeroBookingDialog() {
   const { user, isUserLoading } = useUser();
@@ -340,11 +269,43 @@ function HeroBookingDialog() {
   );
 }
 
-const defaultHeroImages = [
-    { title: 'Healthy Salad', imageUrl: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1770&auto=format&fit=crop' },
-    { title: 'Gajar Ka Halwa', imageUrl: 'https://images.unsplash.com/photo-1628189508545-df9314467c64?q=80&w=1080&auto=format&fit=crop' },
-    { title: 'Rajma Chawal', imageUrl: 'https://images.unsplash.com/photo-1606491589023-0b63e0b484a7?q=80&w=1080&auto=format&fit=crop' },
-    { title: 'Makki ki Roti', imageUrl: 'https://images.unsplash.com/photo-1598514983318-76c8a2a96934?q=80&w=1080&auto=format&fit=crop' }
+const heroSlides = [
+    { 
+        id: 'cook',
+        title: 'Authentic Indian Meals', 
+        subtitle: 'Chef-designed, home-cooked daily. Starting at just ₹200/visit.',
+        badge: 'Disruption-Free Monthly Plans',
+        cta: 'Find a Cook',
+        link: '#services',
+        imageUrl: '/carousel/carousel_cook_v4.png'
+    },
+    { 
+        id: 'maid',
+        title: 'Trusted Home Keepers', 
+        subtitle: 'Vetted, reliable maids that respect your space. Zero absenteeism.',
+        badge: '100% Disruption-Free Guarantee',
+        cta: 'Book a Maid',
+        link: '#services',
+        imageUrl: '/carousel/carousel_maid_v4.png'
+    },
+    { 
+        id: 'elder',
+        title: 'Compassionate Elder Care', 
+        subtitle: 'Warm, trained specialists for your loved ones at home.',
+        badge: 'Trained & Vetted',
+        cta: 'Get Support',
+        link: '#services',
+        imageUrl: '/carousel/carousel_elderly_v4.png'
+    },
+    { 
+        id: 'pantry',
+        title: '100% Pure Pantry', 
+        subtitle: 'A2 Kulfis, ancient grains, and cold-pressed oils. Zero adulteration.',
+        badge: 'Zero Chemicals',
+        cta: 'Shop Pure Grocery',
+        link: '#services',
+        imageUrl: '/carousel/carousel_pantry_v4.png'
+    }
 ];
 
 export default function WelcomePage() {
@@ -367,21 +328,20 @@ export default function WelcomePage() {
   }, [activeService]);
 
   const carouselImages = React.useMemo(() => {
-      if (dbImages && dbImages.length > 0) return dbImages;
-      return defaultHeroImages;
-  }, [dbImages]);
+      return heroSlides;
+  }, []);
 
   const services = [
     { id: 'Cook', name: 'Cook', icon: '/icons/icon_cook.png', color: 'bg-orange-500/10 text-orange-600 ring-orange-500/20' },
     { id: 'Maid', name: 'Maid', icon: '/icons/icon_maid.png', color: 'bg-green-500/10 text-green-600 ring-green-500/20' },
-    { id: 'Child help', name: 'Child help', icon: '/icons/icon_child.png', color: 'bg-blue-500/10 text-blue-600 ring-blue-500/20' },
-    { id: 'Elder help', name: 'Elder help', icon: '/icons/icon_elder.png', color: 'bg-purple-500/10 text-purple-600 ring-purple-500/20' },
+    { id: 'Elder help', name: 'Elder Care', icon: '/icons/icon_elder.png', color: 'bg-purple-500/10 text-purple-600 ring-purple-500/20' },
+    { id: 'Pure Pantry', name: 'Pure Pantry', icon: '/icons/icon_pantry.png', color: 'bg-emerald-500/10 text-emerald-600 ring-emerald-500/20' },
   ];
 
   return (
     <>
       <LandingHeader />
-      <div>
+      <div className="pt-16 md:pt-20 bg-surface">
         <main>
           {/* Bookeato Live Banner */}
           <div className="bg-orange-600 text-white px-4 py-3 text-center flex flex-col sm:flex-row items-center justify-center gap-2 relative z-50">
@@ -392,77 +352,72 @@ export default function WelcomePage() {
              </Link>
           </div>
 
-          {/* New Top Hero Section */}
-          <section className="relative bg-surface overflow-hidden section min-h-[80vh] flex items-center pt-10">
-            {/* ... hero content ... */}
-            <div className="container mx-auto px-6 relative z-10">
-              <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center">
-                <div className="space-y-6 text-center md:text-left max-w-xl mx-auto md:mx-0">
-                  <Badge className="bg-badge-bg text-badge-text font-medium py-1 px-4 text-sm border-none">Home-cooked. Chef-designed. Stress-free.</Badge>
-                   <h1 className="hero-title">
-                        <span className="hero-word-main">Urban Food</span><br />
-                        <span className="hero-word-orange">Problems,</span>
-                        <span className="hero-word-green">Sorted.</span>
+          {/* Coast-to-Coast Hero Section */}
+          <section className="relative w-full h-[75vh] md:h-[85vh] overflow-hidden flex items-center justify-center bg-stone-950 group">
+             <Carousel
+                 key={carouselImages.length}
+                 opts={{ align: "start", loop: true }}
+                 plugins={[ Autoplay({ delay: 5000, stopOnInteraction: false }) ]}
+                 className="w-full h-full absolute inset-0"
+             >
+                 <CarouselContent className="h-full ml-0">
+                     {carouselImages.map((slide, idx) => (
+                         <CarouselItem key={slide.id + idx} className="h-full pl-0 relative">
+                             <div className="relative w-full h-full flex flex-col justify-end bg-stone-950">
+                                 <div className="absolute inset-0 w-full h-full">
+                                   <Image 
+                                       data-ai-hint="hero authentic image"
+                                       src={slide.imageUrl}
+                                       alt={slide.title}
+                                       fill
+                                       className="object-contain md:object-contain transition-transform duration-[30s] ease-linear scale-100 group-hover:scale-105"
+                                       priority={idx === 0}
+                                   />
+                                 </div>
+                                 <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/40 to-transparent pointer-events-none" />
+                                 
+                                 {/* Slide Specific Content */}
+                                 <div className="relative z-20 container mx-auto px-6 pb-20 md:pb-32 text-left flex flex-col items-start gap-4">
+                                     <Badge className="bg-orange-500/90 text-white border-none shadow-lg px-4 py-1.5 text-sm uppercase tracking-widest font-black">{slide.badge}</Badge>
+                                     <div className="max-w-2xl">
+                                       <h3 className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-4 tracking-tight drop-shadow-2xl leading-tight">{slide.title}</h3>
+                                       <p className="text-lg md:text-2xl text-stone-200 font-bold max-w-[90%] drop-shadow-md">{slide.subtitle}</p>
+                                     </div>
+                                     <div className="flex gap-4 mt-6 items-center flex-wrap">
+                                       <Button asChild variant="cta" size="lg" className="rounded-2xl shadow-2xl touch-manipulation active:scale-95 group/btn border border-white/20 relative z-30 font-bold text-lg h-14 px-8">
+                                           <a href="#services" onClick={(e) => { e.preventDefault(); setActiveService(slide.title.includes('Cook') ? 'Cook' : slide.title.includes('Maid') ? 'Maid' : slide.title.includes('Elder') ? 'Elder help' : 'Pure Pantry'); document.getElementById('services-grid')?.scrollIntoView({behavior: 'smooth'}); }}>
+                                               {slide.cta} <ArrowRight className="ml-3 w-5 h-5 transition-transform group-hover/btn:translate-x-1" />
+                                           </a>
+                                       </Button>
+                                     </div>
+                                 </div>
+                             </div>
+                         </CarouselItem>
+                     ))}
+                 </CarouselContent>
+             </Carousel>
+
+             {/* Global Floating Header OVER the carousel */}
+             <div className="absolute top-8 md:top-12 left-0 right-0 z-30 pointer-events-none">
+                <div className="container mx-auto px-6">
+                    <h1 className="text-3xl md:text-5xl font-black text-white drop-shadow-2xl">
+                        <span className="text-stone-100">Urban</span> <span className="text-orange-400">Problems,</span> <span className="text-green-400">Sorted.</span>
                     </h1>
-                  
-                  <p className="hero-intro">
-                    New city, long workdays, and food apps on speed dial?
-                  </p>
-                  
-                  <PainTabs />
-
-                  <p className="hero-solution">
-                    We send a trusted home cook to your kitchen, following chef-designed, nutrition-first
-                    menus with ingredients you approve — full plates, real comfort, total
-                    <em> paisa vasool</em>.
-                  </p>
-
-                  <div className="pt-4">
-                    <HeroBookingDialog />
-                  </div>
+                    <p className="text-stone-200 font-semibold mt-2 drop-shadow-lg max-w-md hidden md:block">Premium home care and pure dining, automated.</p>
                 </div>
-                <div className="relative flex items-center justify-center p-4">
-                   <div className="absolute -right-1/4 -top-1/4 w-[500px] h-[500px] bg-green-primary/10 rounded-full" />
-                  <div className="w-full max-w-md lg:max-w-lg relative z-10 rounded-full overflow-hidden aspect-square border-8 border-white/50 shadow-2xl bg-white">
-                    <Carousel
-                        key={carouselImages.length}
-                        opts={{
-                            align: "start",
-                            loop: true,
-                        }}
-                        plugins={[
-                            Autoplay({
-                                delay: 4000,
-                                stopOnInteraction: false,
-                            }),
-                        ]}
-                        className="w-full h-full"
-                    >
-                        <CarouselContent className="h-full">
-                            {carouselImages.map((image, idx) => (
-                                <CarouselItem key={image.imageUrl + idx} className="h-full">
-                                    <div className="relative w-full h-full">
-                                        <Image 
-                                            data-ai-hint="hero food image"
-                                            src={image.imageUrl}
-                                            alt={image.title}
-                                            fill
-                                            className="object-cover"
-                                            priority={idx === 0}
-                                        />
-                                    </div>
-                                </CarouselItem>
-                            ))}
-                        </CarouselContent>
-                    </Carousel>
-                  </div>
+             </div>
+             
+             {/* Simple Glassmorphic Booking Widget */}
+             <div className="absolute bottom-20 md:bottom-28 right-6 md:right-10 z-30 hidden lg:block">
+                <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-[2rem] shadow-2xl w-80 pointer-events-auto">
+                   <h4 className="text-white font-bold mb-4 text-lg drop-shadow-md">Quick Availability</h4>
+                   <HeroBookingDialog />
                 </div>
-              </div>
-            </div>
+             </div>
           </section>
 
           {/* Service Hub Section - 2x2 Grid for Mobile Fluidity */}
-          <section className="bg-white pt-16 md:pt-24 pb-8 relative z-20">
+          <section id="services-grid" className="bg-white pt-16 md:pt-24 pb-8 relative z-20">
             <div className="container mx-auto px-6 text-center mb-10 md:mb-12">
                <Badge className="bg-primary/10 text-primary font-bold py-1 px-4 text-[10px] md:text-xs uppercase tracking-widest border-none mb-4">Explore Our Services</Badge>
                <h2 className="text-3xl md:text-5xl font-black text-stone-900 tracking-tight leading-tight">What do you need help with today?</h2>
@@ -478,10 +433,10 @@ export default function WelcomePage() {
                       key={service.id}
                       onClick={() => setActiveService(service.id)}
                       className={cn(
-                        "flex flex-col items-center justify-center p-4 md:p-6 rounded-[1.5rem] md:rounded-[2.5rem] border-2 md:border-4 transition-all duration-500 group relative overflow-hidden h-[160px] md:h-[280px]",
+                        "flex flex-col items-center justify-center p-4 md:p-6 rounded-[1.5rem] md:rounded-[2.5rem] border transition-all duration-300 group relative overflow-hidden h-[160px] md:h-[280px] cursor-pointer shadow-sm hover:shadow-lg",
                         isActive 
-                          ? `bg-white shadow-xl ${service.color.split(' ')[2]} ring-4 md:ring-8 ring-stone-50 scale-[1.02] z-10` 
-                          : "bg-stone-50/50 border-transparent hover:bg-white hover:border-stone-100 opacity-70 hover:opacity-100"
+                          ? `bg-white border-transparent ${service.color.split(' ')[2]} ring-4 md:ring-8 ring-stone-100 scale-[1.02] z-10 shadow-xl` 
+                          : "bg-surface border-surface-border hover:border-primary/30 hover:-translate-y-1"
                       )}
                     >
                       {isActive && (
@@ -489,8 +444,8 @@ export default function WelcomePage() {
                       )}
 
                       <div className={cn(
-                        "relative w-16 h-16 md:w-32 md:h-32 rounded-xl md:rounded-[2rem] transition-all duration-700 p-1",
-                        isActive ? "scale-110 shadow-lg" : "grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 scale-90 group-hover:scale-100"
+                        "relative w-16 h-16 md:w-32 md:h-32 rounded-xl md:rounded-[2rem] transition-transform duration-300 p-1",
+                        isActive ? "scale-110 drop-shadow-md" : "scale-100 group-hover:scale-105"
                       )}>
                         <Image 
                           src={service.icon}
@@ -503,7 +458,7 @@ export default function WelcomePage() {
                       <div className="text-center mt-3 md:mt-4">
                         <span className={cn(
                           "font-black text-sm md:text-2xl transition-all block tracking-tight leading-none",
-                          isActive ? "text-stone-900" : "text-stone-400 group-hover:text-stone-600"
+                          isActive ? "text-stone-900" : "text-stone-600 group-hover:text-stone-900"
                         )}>
                           {service.name}
                         </span>
@@ -627,30 +582,30 @@ export default function WelcomePage() {
               <MaidServiceTab />
             )}
 
-            {activeService === 'Child help' && (
+            {activeService === 'Pure Pantry' && (
               <section className="container mx-auto px-6 text-center py-10">
-                <Badge className="bg-primary/10 text-primary font-bold py-1 px-4 text-xs uppercase tracking-widest border-none mb-4">Coming Soon</Badge>
-                <h2 className="section-title">Reliable Child Help</h2>
+                <Badge className="bg-emerald-500/10 text-emerald-600 font-bold py-1 px-4 text-xs uppercase tracking-widest border-none mb-4">New Launch</Badge>
+                <h2 className="section-title">Pure Pantry</h2>
                 <p className="text-text-secondary max-w-2xl mx-auto mt-4 text-lg">
-                  Peace of mind for parents. Our child care assistants are thoroughly vetted and trained to provide a safe, nurturing environment for your little ones.
+                  The ultimate destination for unadulterated goodness. Only verified healthy items: from cold-pressed oils and ancient grain millet ladoos, to premium Kashmiri saffron and natural A2 Cow Kulfi. Zero chemicals, zero compromise.
                 </p>
                 <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                  <div className="flex gap-6 text-left p-6 rounded-3xl bg-surface border shadow-sm">
-                    <div className="bg-primary/10 text-primary p-4 rounded-2xl h-fit shrink-0">
-                      <Baby className="h-8 w-8" />
+                  <div className="flex gap-6 text-left p-6 rounded-3xl bg-surface border shadow-sm hover:border-emerald-500/30 transition-all">
+                    <div className="bg-emerald-500/10 text-emerald-600 p-4 rounded-2xl h-fit shrink-0">
+                      <Sparkles className="h-8 w-8" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold mb-2">After-School Care</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">Help with snacks, homework, and playtime until you get home from work.</p>
+                      <h3 className="text-xl font-bold mb-2">Artisan & Cold-Pressed</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">Authentic A2 cow milk treats, pure Kashmiri saffron, apples, and traditionally milled cold-pressed oils. Your body will thank you.</p>
                     </div>
                   </div>
-                  <div className="flex gap-6 text-left p-6 rounded-3xl bg-surface border shadow-sm">
-                    <div className="bg-primary/10 text-primary p-4 rounded-2xl h-fit shrink-0">
-                      <Baby className="h-8 w-8" />
+                  <div className="flex gap-6 text-left p-6 rounded-3xl bg-surface border shadow-sm hover:border-emerald-500/30 transition-all">
+                    <div className="bg-emerald-500/10 text-emerald-600 p-4 rounded-2xl h-fit shrink-0">
+                      <Shield className="h-8 w-8" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold mb-2">Toddler Supervision</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">Engaging and safe supervision for younger children during the day.</p>
+                      <h3 className="text-xl font-bold mb-2">Strictly Curated Inventory</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">We strictly prohibit anything that harms the human system. If it's on Pure Pantry, it's 100% wholesome and lab-verified.</p>
                     </div>
                   </div>
                 </div>
